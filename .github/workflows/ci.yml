@@ -73,10 +73,10 @@ jobs:
       #       [1]: https://github.com/peter-evans/create-pull-request
       #     branch: ci-test-${{ matrix.target }}
 
-      # - name: Close Fork Pulls
-      #   uses: ./
-      #   with:
-      #     comment: '[CI] test ${{ matrix.target }}'
+      - name: Close Fork Pulls
+        uses: ./
+        with:
+          comment: '[CI] test ${{ matrix.target }}'
 
   package:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
