@@ -2067,6 +2067,7 @@ function run() {
             else {
                 core.info(`No pull requests from forks found.`);
             }
+            core.setOutput('closed-count', closedCount);
         }
         catch (error) {
             core.debug(util_1.inspect(error));
