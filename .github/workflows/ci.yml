@@ -43,6 +43,10 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: master
+      - run: |
+          git config user.password ${{ secrets.MACHINE_USER_PAT }}
+          git remote set-url origin https://github.com/test-case-machine-user/close-fork-pulls
+          git fetch --unshallow -p origin
       - if: matrix.target == 'built' || github.event_name == 'pull_request'
         uses: actions/download-artifact@v2
         with:
@@ -53,11 +57,6 @@ jobs:
         with:
           name: action.yml
           path: .
-
-      - run: |
-          git config user.password ${{ secrets.MACHINE_USER_PAT }}
-          git remote set-url origin https://github.com/test-case-machine-user/close-fork-pulls
-          git fetch --unshallow -p origin
 
       - name: Create change
         run: date +%s > report.txt
