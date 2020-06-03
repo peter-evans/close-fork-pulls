@@ -23,6 +23,7 @@ async function run(): Promise<void> {
     })
     core.debug(`Pulls: ${inspect(pulls)}`)
 
+    let closedCount = 0
     for (const pull of pulls) {
       if (pull.head.user.login != owner) {
         if (inputs.comment && inputs.comment.length > 0) {
@@ -41,7 +42,13 @@ async function run(): Promise<void> {
           pull_number: pull.number,
           state: 'closed'
         })
+        closedCount++
       }
+    }
+    if (closedCount > 0) {
+      core.info(`Pull requests closed: ${closedCount}`)
+    } else {
+      core.info(`No pull requests from forks found.`)
     }
   } catch (error) {
     core.debug(inspect(error))

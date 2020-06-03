@@ -2040,6 +2040,7 @@ function run() {
                 state: 'open'
             });
             core.debug(`Pulls: ${util_1.inspect(pulls)}`);
+            let closedCount = 0;
             for (const pull of pulls) {
                 if (pull.head.user.login != owner) {
                     if (inputs.comment && inputs.comment.length > 0) {
@@ -2057,7 +2058,14 @@ function run() {
                         pull_number: pull.number,
                         state: 'closed'
                     });
+                    closedCount++;
                 }
+            }
+            if (closedCount > 0) {
+                core.info(`Pull requests closed: ${closedCount}`);
+            }
+            else {
+                core.info(`No pull requests from forks found.`);
             }
         }
         catch (error) {
