@@ -47,6 +47,7 @@ jobs:
           git config user.password ${{ secrets.MACHINE_USER_PAT }}
           git remote set-url origin https://github.com/test-case-machine-user/close-fork-pulls
           git fetch --unshallow -p origin
+
       - if: matrix.target == 'built' || github.event_name == 'pull_request'
         uses: actions/download-artifact@v2
         with:
@@ -83,8 +84,8 @@ jobs:
         uses: ./
         with:
           comment: '[CI] test ${{ matrix.target }}'
-      # - if: steps.cfp.outputs.closed-count != 1
-      #   run: exit 1
+      - if: steps.cfp.outputs.closed-count != 1
+        run: exit 1
 
   package:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
