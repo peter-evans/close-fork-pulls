@@ -14,7 +14,7 @@ async function run(): Promise<void> {
     const [owner, repo] = inputs.repository.split('/')
     core.debug(`Repo: ${inspect(repo)}`)
 
-    const octokit = new github.GitHub(inputs.token)
+    const octokit = github.getOctokit(inputs.token)
 
     const {data: pulls} = await octokit.pulls.list({
       owner: owner,
