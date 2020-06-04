@@ -25,16 +25,31 @@ jobs:
       - run: npm run test
       - uses: actions/upload-artifact@v2
         with:
-          name: dist
+          name: dist-built
           path: dist
       - uses: actions/upload-artifact@v2
         with:
-          name: action.yml
+          name: action.yml-built
+          path: action.yml
+
+  artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist-committed
+          path: dist
+      - uses: actions/upload-artifact@v2
+        with:
+          name: action.yml-committed
           path: action.yml
 
   test:
     if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name == github.repository
-    needs: [build]
+    needs: [build, artifact]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -50,15 +65,13 @@ jobs:
           git remote set-url origin https://github.com/test-case-machine-user/close-fork-pulls-test-fixture-${{ matrix.target }}
           git fetch --unshallow -p origin
 
-      - if: matrix.target == 'built' || github.event_name == 'pull_request'
-        uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: dist-${{ matrix.target }}
           path: dist
-      - if: matrix.target == 'built' || github.event_name == 'pull_request'
-        uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v2
         with:
-          name: action.yml
+          name: action.yml-${{ matrix.target }}
           path: .
 
       - name: Create change
@@ -99,7 +112,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: dist-built
           path: dist
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2
