@@ -60,10 +60,6 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: peter-evans/close-fork-pulls-test-fixture-${{ matrix.target }}
           ref: master
-      - run: |
-          git config user.password ${{ secrets.MACHINE_USER_PAT }}
-          git remote set-url origin https://github.com/test-case-machine-user/close-fork-pulls-test-fixture-${{ matrix.target }}
-          git fetch --unshallow -p origin
 
       - uses: actions/download-artifact@v2
         with:
@@ -82,8 +78,6 @@ jobs:
         with:
           token: ${{ secrets.MACHINE_USER_PAT }}
           commit-message: '[CI] test ${{ matrix.target }}'
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           title: '[CI] test ${{ matrix.target }}'
           body: |
             - CI test case for target '${{ matrix.target }}'
@@ -92,7 +86,7 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-pull-request
           branch: ci-test-${{ matrix.target }}
-          request-to-parent: true
+          push-to-fork: test-case-machine-user/close-fork-pulls-test-fixture-${{ matrix.target }}
 
       - name: Close Fork Pulls
         id: cfp
@@ -118,8 +112,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Update distribution
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           title: Update distribution
           body: |
             - Updates the distribution for changes on `master`
