@@ -90,7 +90,7 @@ jobs:
 
       - name: Close Fork Pulls
         id: cfp
-        uses: ./
+        uses: peter-evans/close-fork-pulls@deprecated-master
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: peter-evans/close-fork-pulls-test-fixture-${{ matrix.target }}
