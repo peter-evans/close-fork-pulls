@@ -16,7 +16,7 @@ async function run(): Promise<void> {
 
     const octokit = github.getOctokit(inputs.token)
 
-    const {data: pulls} = await octokit.pulls.list({
+    const {data: pulls} = await octokit.rest.pulls.list({
       owner: owner,
       repo: repo,
       state: 'open'
@@ -25,10 +25,10 @@ async function run(): Promise<void> {
 
     let closedCount = 0
     for (const pull of pulls) {
-      if (pull.head.user.login != owner) {
+      if (pull.head.user && pull.head.user.login != owner) {
         if (inputs.comment && inputs.comment.length > 0) {
           core.info('Adding a comment before closing the pull request')
-          await octokit.issues.createComment({
+          await octokit.rest.issues.createComment({
             owner: owner,
             repo: repo,
             issue_number: pull.number,
@@ -36,7 +36,7 @@ async function run(): Promise<void> {
           })
         }
 
-        await octokit.pulls.update({
+        await octokit.rest.pulls.update({
           owner: owner,
           repo: repo,
           pull_number: pull.number,
