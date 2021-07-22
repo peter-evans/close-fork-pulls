@@ -229,7 +229,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
+exports.getState = exports.saveState = exports.group = exports.endGroup = exports.startGroup = exports.info = exports.warning = exports.error = exports.debug = exports.isDebug = exports.setFailed = exports.setCommandEcho = exports.setOutput = exports.getBooleanInput = exports.getMultilineInput = exports.getInput = exports.addPath = exports.setSecret = exports.exportVariable = exports.ExitCode = void 0;
 const command_1 = __nccwpck_require__(351);
 const file_command_1 = __nccwpck_require__(717);
 const utils_1 = __nccwpck_require__(278);
@@ -315,6 +315,21 @@ function getInput(name, options) {
     return val.trim();
 }
 exports.getInput = getInput;
+/**
+ * Gets the values of an multiline input.  Each value is also trimmed.
+ *
+ * @param     name     name of the input to get
+ * @param     options  optional. See InputOptions.
+ * @returns   string[]
+ *
+ */
+function getMultilineInput(name, options) {
+    const inputs = getInput(name, options)
+        .split('\n')
+        .filter(x => x !== '');
+    return inputs;
+}
+exports.getMultilineInput = getMultilineInput;
 /**
  * Gets the input value of the boolean type in the YAML 1.2 "core schema" specification.
  * Support boolean input list: `true | True | TRUE | false | False | FALSE` .
@@ -6097,7 +6112,7 @@ module.exports = eval("require")("encoding");
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("assert");;
+module.exports = require("assert");
 
 /***/ }),
 
@@ -6105,7 +6120,7 @@ module.exports = require("assert");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("events");;
+module.exports = require("events");
 
 /***/ }),
 
@@ -6113,7 +6128,7 @@ module.exports = require("events");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("fs");;
+module.exports = require("fs");
 
 /***/ }),
 
@@ -6121,7 +6136,7 @@ module.exports = require("fs");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("http");;
+module.exports = require("http");
 
 /***/ }),
 
@@ -6129,7 +6144,7 @@ module.exports = require("http");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("https");;
+module.exports = require("https");
 
 /***/ }),
 
@@ -6137,7 +6152,7 @@ module.exports = require("https");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("net");;
+module.exports = require("net");
 
 /***/ }),
 
@@ -6145,7 +6160,7 @@ module.exports = require("net");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("os");;
+module.exports = require("os");
 
 /***/ }),
 
@@ -6153,7 +6168,7 @@ module.exports = require("os");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("path");;
+module.exports = require("path");
 
 /***/ }),
 
@@ -6161,7 +6176,7 @@ module.exports = require("path");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("stream");;
+module.exports = require("stream");
 
 /***/ }),
 
@@ -6169,7 +6184,7 @@ module.exports = require("stream");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("tls");;
+module.exports = require("tls");
 
 /***/ }),
 
@@ -6177,7 +6192,7 @@ module.exports = require("tls");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("url");;
+module.exports = require("url");
 
 /***/ }),
 
@@ -6185,7 +6200,7 @@ module.exports = require("url");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("util");;
+module.exports = require("util");
 
 /***/ }),
 
@@ -6193,7 +6208,7 @@ module.exports = require("util");;
 /***/ ((module) => {
 
 "use strict";
-module.exports = require("zlib");;
+module.exports = require("zlib");
 
 /***/ })
 
@@ -6232,7 +6247,9 @@ module.exports = require("zlib");;
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
-/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
+/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
+/******/ 	
+/************************************************************************/
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
