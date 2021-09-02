@@ -51,7 +51,7 @@ async function run(): Promise<void> {
       core.info(`No pull requests from forks found.`)
     }
     core.setOutput('closed-count', closedCount)
-  } catch (error) {
+  } catch (error: any) {
     core.debug(inspect(error))
     core.setFailed(error.message)
   }
