@@ -10,7 +10,7 @@ inputs:
   comment:
     description: 'A comment to make on the pull requests before closing'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'dist/index.js'
 branding:
   icon: 'slash'

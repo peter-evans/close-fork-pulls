@@ -1,6 +1,6 @@
 {
   "name": "close-fork-pulls",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "description": "A GitHub action to close pull requests from forks",
   "main": "lib/main.js",
