@@ -14,20 +14,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 12.x
+          node-version: 16.x
       - run: npm ci
       - run: npm run build
       - run: npm run format-check
       - run: npm run lint
       - run: npm run test
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: dist-built
           path: dist
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: action.yml-built
           path: action.yml
@@ -35,14 +35,14 @@ jobs:
   artifact:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: main
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: dist-committed
           path: dist
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: action.yml-committed
           path: action.yml
@@ -55,17 +55,17 @@ jobs:
       matrix:
         target: [built, committed]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: peter-evans/close-fork-pulls-test-fixture-${{ matrix.target }}
           ref: master
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: dist-${{ matrix.target }}
           path: dist
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: action.yml-${{ matrix.target }}
           path: .
@@ -103,8 +103,8 @@ jobs:
     needs: [test]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
         with:
           name: dist-built
           path: dist
