@@ -74,7 +74,7 @@ jobs:
         run: date +%s > report.txt
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.MACHINE_USER_PAT }}
           commit-message: '[CI] test ${{ matrix.target }}'
@@ -109,7 +109,7 @@ jobs:
           name: dist-built
           path: dist
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           commit-message: Update distribution
           title: Update distribution
