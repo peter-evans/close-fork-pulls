@@ -67,15 +67,6 @@ jobs:
           repository: peter-evans/close-fork-pulls-test-fixture-${{ matrix.target }}
           ref: master
 
-      - uses: actions/download-artifact@v3
-        with:
-          name: dist-${{ matrix.target }}
-          path: dist
-      - uses: actions/download-artifact@v3
-        with:
-          name: action.yml-${{ matrix.target }}
-          path: .
-
       - name: Create change
         run: date +%s > report.txt
 
@@ -93,6 +84,15 @@ jobs:
             [1]: https://github.com/peter-evans/create-pull-request
           branch: ci-test-${{ matrix.target }}-${{ github.sha }}
           push-to-fork: test-case-machine-user/close-fork-pulls-test-fixture-${{ matrix.target }}
+
+      - uses: actions/download-artifact@v3
+        with:
+          name: dist-${{ matrix.target }}
+          path: dist
+      - uses: actions/download-artifact@v3
+        with:
+          name: action.yml-${{ matrix.target }}
+          path: .
 
       - name: Close Fork Pulls
         id: cfp
