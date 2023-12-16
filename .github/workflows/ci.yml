@@ -85,11 +85,11 @@ jobs:
           branch: ci-test-${{ matrix.target }}-${{ github.sha }}
           push-to-fork: test-case-machine-user/close-fork-pulls-test-fixture-${{ matrix.target }}
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: dist-${{ matrix.target }}
           path: dist
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: action.yml-${{ matrix.target }}
           path: .
@@ -110,7 +110,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: dist-built
           path: dist
