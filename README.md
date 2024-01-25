@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Close Pull
-        uses: peter-evans/close-fork-pulls@v2
+        uses: peter-evans/close-fork-pulls@v3
         with:
           comment: |
             Sorry. Pull requests are not accepted for this repository.
