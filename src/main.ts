@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
+import {RestEndpointMethodTypes} from '@octokit/plugin-rest-endpoint-methods'
 import {inspect} from 'util'
 
 function getErrorMessage(error: unknown) {
@@ -12,7 +13,8 @@ async function run(): Promise<void> {
     const inputs = {
       token: core.getInput('token'),
       repository: core.getInput('repository'),
-      comment: core.getInput('comment')
+      comment: core.getInput('comment'),
+      prNumber: Number(core.getInput('prNumber'))
     }
     core.debug(`Inputs: ${inspect(inputs)}`)
 
@@ -21,11 +23,25 @@ async function run(): Promise<void> {
 
     const octokit = github.getOctokit(inputs.token)
 
-    const {data: pulls} = await octokit.rest.pulls.list({
-      owner: owner,
-      repo: repo,
-      state: 'open'
-    })
+    let pulls:
+      | RestEndpointMethodTypes['pulls']['list']['response']['data']
+      | RestEndpointMethodTypes['pulls']['get']['response']['data'][]
+
+    if (Number.isInteger(inputs.prNumber) && inputs.prNumber > 0) {
+      const {data: pull} = await octokit.rest.pulls.get({
+        owner,
+        repo,
+        pull_number: Number(inputs.prNumber)
+      })
+      pulls = [pull]
+    } else {
+      const {data} = await octokit.rest.pulls.list({
+        owner: owner,
+        repo: repo,
+        state: 'open'
+      })
+      pulls = data
+    }
     core.debug(`Pulls: ${inspect(pulls)}`)
 
     let closedCount = 0
