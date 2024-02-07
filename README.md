@@ -30,6 +30,7 @@ jobs:
 | `token` | `GITHUB_TOKEN` or a `repo` scoped [PAT](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token). | `GITHUB_TOKEN` |
 | `repository` | The GitHub repository containing the pull request. | `github.repository` (Current repository) |
 | `comment` | A comment to make on the pull request before closing. | |
+| `pr-number` | Target PR number | |
 
 ### Accessing pull requests in other repositories
 
