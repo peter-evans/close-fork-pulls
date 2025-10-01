@@ -1,9 +1,12 @@
 {
   "name": "close-fork-pulls",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
   "description": "A GitHub action to close pull requests from forks",
   "main": "lib/main.js",
+  "engines": {
+    "node": ">=24.4.0"
+  },
   "scripts": {
     "build": "tsc && ncc build",
     "format": "prettier --write '**/*.ts'",
@@ -34,6 +37,7 @@
   "devDependencies": {
     "@types/jest": "^27.0.3",
     "@types/node": "^16.18.126",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@vercel/ncc": "^0.38.4",
     "eslint": "^8.57.1",
